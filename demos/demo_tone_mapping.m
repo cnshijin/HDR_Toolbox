@@ -25,14 +25,14 @@ disp('3) Show the image Bottles_Small.hdr applying gamma');
 h = figure(2);
 set(h,'Name','HDR visualization with gamma correction, 2.2, at F-stop 0');
 imgOut = GammaTMO(img, 2.2, 0, 1);
-imwrite(imgOut, 'output/Bottles_Small_TMO_Gamma.png');
+imwrite(imgOut, 'output/Bottles_Small_TMO_Gamma.jpg');
 
 disp('4) Show the image Bottles_Small.hdr applying Reinhard''s Tmo');
 h = figure(3);
 set(h,'Name','Tone mapped image using ReinhardTMO');
 imgTMO = ReinhardTMO(img);
-imgOut = GammaTMO(imgTMO, 2.2, 0, 1);
-imwrite(imgOut, 'output/Bottles_Small_TMO_Reinhard.png');
+imgOut = uint8(GammaTMO(imgTMO, 2.2, 0, 1).*256);
+imwrite(imgOut, 'output/Bottles_Small_TMO_Reinhard.ppm');
 
 disp('5) Show and Apply Color Correction to the tone mapped image');
 h = figure(4);
@@ -41,4 +41,18 @@ imgTMO = ColorCorrection(imgTMO,0.5);
 imgOut = GammaTMO(imgTMO, 2.2, 0, 1);
 
 disp('6) Save the tone mapped image as a PNG.');
-imwrite(imgOut, 'output/Bottles_Small_TMO_Reinhard_CC.png');
+imwrite(imgOut, 'output/Bottles_Small_TMO_Reinhard_CC.jpg');
+
+disp('7) Show the image Bottles_Small.hdr applying WardGlobal''s Tmo');
+h = figure(5);
+set(h,'Name','Tone mapped image using WardGlobalTMO');
+imgTMO = WardGlobalTMO(img, 100);
+imgOut = GammaTMO(imgTMO, 2.2, 0, 1);
+imwrite(imgOut, 'output/Bottles_Small_TMO_WardGlobal.jpg');
+
+disp('8) Show the image Bottles_Small.hdr applying WardHist''s Tmo');
+h = figure(6);
+set(h,'Name','Tone mapped image using WardHistAdjTMO');
+imgTMO = WardHistAdjTMO(img, 100);
+imgOut = GammaTMO(imgTMO, 2.2, 0, 1);
+imwrite(imgOut, 'output/Bottles_Small_TMO_WardHistAdj.jpg');
